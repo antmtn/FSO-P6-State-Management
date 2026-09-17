@@ -2,8 +2,12 @@ import { useFeedback } from "../store"
 
 const Statistics = () => {
   const { good, neutral, bad, total } = useFeedback()
-  const average = (good - bad)/total
-  const positive = (good/total) * 100
+  let average = 0
+  let positive = 0
+  if (total > 0){
+    average = (good - bad)/total
+    positive = (good/total) * 100
+  }
   
   return (
     <div>
@@ -14,8 +18,8 @@ const Statistics = () => {
           <tr><td>neutral</td><td>{neutral}</td></tr>
           <tr><td>bad</td><td>{bad}</td></tr>
           <tr><td>all</td><td>{total}</td></tr>
-          <tr><td>average</td><td>{average.toFixed(2)}</td></tr>
-          <tr><td>positive</td><td>{positive.toFixed(2)} %</td></tr>
+          <tr><td>average</td><td>{average}</td></tr>
+          <tr><td>positive</td><td>{positive} %</td></tr>
         </tbody>
       </table>
     </div>
