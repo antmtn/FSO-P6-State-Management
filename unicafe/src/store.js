@@ -2,10 +2,10 @@ import { create } from 'zustand'
 import { useShallow } from 'zustand/react/shallow'
 
 const useFeedbackStore = create(set => ({
-  good:5,
-  neutral:2,
-  bad:1,
-  total:8,
+  good:0,
+  neutral:0,
+  bad:0,
+  total:0,
   actions: {
     addGood: () => set(state => ({ 
       good: state.good + 1,
