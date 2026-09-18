@@ -1,10 +1,12 @@
-import { useAnecdotes } from "./store"
+import { useAnecdoteActions, useAnecdotes } from "./store"
 
 const App = () => {
   const anecdotes = useAnecdotes()
+  const { addVote } = useAnecdoteActions()
 
   const vote = (id) => {
     console.log("vote", id)
+    addVote(id)
   }
 
   return (
