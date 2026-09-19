@@ -1,7 +1,7 @@
 import { useAnecdoteActions, useAnecdotes } from "../store"
 
 const AnecdoteList = () => {
-  const anecdotes = useAnecdotes()
+  let anecdotes = useAnecdotes()
   const { addVote } = useAnecdoteActions()
 
   const vote = (id) => {
