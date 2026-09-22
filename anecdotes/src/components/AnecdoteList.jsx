@@ -2,7 +2,7 @@ import { useAnecdoteActions, useAnecdotes } from "../store"
 
 const AnecdoteList = () => {
   let anecdotes = useAnecdotes()
-  const { addVote } = useAnecdoteActions()
+  const { addVote} = useAnecdoteActions()
 
   const vote = (id) => {
     console.log("vote", id)
