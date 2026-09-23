@@ -17,11 +17,15 @@ const useAnecdoteStore = create((set) => ({
   anecdotes: anecdotesAtStart.map(asObject),
   filter: '',
   actions: {
-    addAnecdote: anecdote => set(
-      state => ({
-        anecdotes: state.anecdotes.concat(asObject(anecdote))
-      })
-    ),
+    addAnecdote: async anecdote => {
+      const newAnecdote = await anecdoteService.createNew(asObject(anecdote))
+      set(
+        state => ({
+          anecdotes: state.anecdotes.concat(newAnecdote)
+        })
+      )
+    }
+    ,
     addVote: id => set(
       state => ({
         anecdotes: state.anecdotes.map(anecdote =>
