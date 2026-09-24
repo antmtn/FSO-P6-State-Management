@@ -13,7 +13,7 @@ const asObject = anecdote => ({
   votes: 0
 })
 
-const useAnecdoteStore = create((set) => ({
+const useAnecdoteStore = create((set, get) => ({
   anecdotes: anecdotesAtStart.map(asObject),
   filter: '',
   actions: {
@@ -26,21 +26,31 @@ const useAnecdoteStore = create((set) => ({
       )
     }
     ,
-    addVote: id => set(
-      state => ({
-        anecdotes: state.anecdotes.map(anecdote =>
-          anecdote.id === id ? {...anecdote, votes: anecdote.votes +1 } : anecdote
-        )
-        .toSorted((a,b) => b.votes - a.votes)
-      })
-    ),
+    addVote: async id => {
+      const anecdote = get().anecdotes.find(a => a.id === id)
+      const updated = await anecdoteService.update(
+        id, {...anecdote, votes: anecdote.votes + 1} 
+      )
+      set(
+        state => ({
+          anecdotes: state.anecdotes.map(anecdote =>
+            anecdote.id === id ? updated : anecdote
+          )
+          .toSorted((a,b) => b.votes - a.votes)
+        }) 
+      )
+    }
+    ,
     setFilter: newFilter => set(
       () => ({
         filter: newFilter
       })
     ),
     initialize: async () => {
-      const anecdotes = await anecdoteService.getAll()
+      let anecdotes = await anecdoteService.getAll()
+      anecdotes = anecdotes.toSorted(
+        (a,b) => b.votes - a.votes
+      )
       set(() => ({ anecdotes }))
     }
   }
