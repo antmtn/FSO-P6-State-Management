@@ -2,13 +2,18 @@ import { useAnecdoteActions, useAnecdotes, useNotificationActions } from "../sto
 
 const AnecdoteList = () => {
   let anecdotes = useAnecdotes()
-  const { addVote } = useAnecdoteActions()
+  const { addVote, deleteAnecdote } = useAnecdoteActions()
   const { setNotification } = useNotificationActions()
 
   const vote = (id, content) => {
     console.log("vote", id)
     setNotification(`You voted '${content}'`)
     addVote(id)
+  }
+
+  const handleDelete = (id, content) => {
+    setNotification(`You deleted '${content}'`)
+    deleteAnecdote(id)
   }
 
   return(
@@ -19,6 +24,9 @@ const AnecdoteList = () => {
           <div>
             has {anecdote.votes}
             <button onClick={() => vote(anecdote.id, anecdote.content)}>vote</button>
+            {anecdote.votes == 0 && 
+            <button onClick={() => handleDelete(anecdote.id, anecdote.content)}>delete</button>
+            }
           </div>
         </div>
       ))}

@@ -24,6 +24,14 @@ const useAnecdoteStore = create((set, get) => ({
           anecdotes: state.anecdotes.concat(newAnecdote)
         })
       )
+    },
+    deleteAnecdote: async id => {
+      const response = await anecdoteService.deleteAnecdote(id)
+      set(
+        state => ({
+          anecdotes: state.anecdotes.filter(a => a.id !== response.id)
+        })
+      )
     }
     ,
     addVote: async id => {
